@@ -62,7 +62,7 @@ function HelpWantedRegister() {
 
                     <Button 
                         type="submit" 
-                        class="gradient-background" style={{ marginTop : 25 , color : 'white' , fontSize : '1em' , padding : 10 , border : '0px' , borderRadius : 8 }}
+                        className="gradient-background" style={{ marginTop : 25 , color : 'white' , fontSize : '1em' , padding : 10 , border : '0px' , borderRadius : 8 }}
                     >
                         Next
                     </Button>

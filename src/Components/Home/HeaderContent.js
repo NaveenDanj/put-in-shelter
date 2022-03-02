@@ -13,8 +13,8 @@ function HeaderContent(context) {
     
     return (
         <>
-            <h1 style={styles.headerText}>SIMPLE / BEAUTIFUL</h1>
-            <h2 style={styles.subtitle }>LANDING PAGE</h2>
+            <h1 style={styles.headerText}>#CODEFORUKRAINE</h1>
+            <h2 style={styles.subtitle }>Help to find a shelter</h2>
 
             <div style={styles.content}>
                 <p style={{ marginTop : -5 ,}}>Aliquip dolor culpa ad officia tempor eu id do reprehenderit. Ex dolore ea anim laboris ea nostrud quis labore aliquip laboris incididunt. Officia exercitation nostrud laboris aute quis. Reprehenderit non veniam mollit sint dolor proident ad. Ea laboris duis sint duis consectetur cillum commodo aliqua ullamco.</p><br/>
