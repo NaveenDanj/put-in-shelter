@@ -16,20 +16,29 @@ function HelpWantedRegister() {
                 
                 <h1 style={ styles.headerText }>Register</h1>
 
-                <div style={styles.fieldContainer}>
+                <form style={styles.fieldContainer}>
 
                     <TextField
-                        error
+                        type={'email'}
                         id="outlined-error-helper-text"
-                        label="Username"
-                        placeholder='Type your username'
+                        label="Email"
+                        placeholder='Type your email'
                         // helperText="Incorrect entry."
                         size="small"
-
+                        required
                     /><br/>
 
                     <TextField
-                        error
+                        type={'text'}
+                        id="outlined-error-helper-text"
+                        label="Display Name"
+                        placeholder='Type your Display Name'
+                        // helperText="Incorrect entry."
+                        size="small"
+                        required
+                    /><br/>
+
+                    <TextField
                         id="outlined-error-helper-text"
                         label="Password"
                         type="password"
@@ -37,12 +46,28 @@ function HelpWantedRegister() {
                         // helperText="Incorrect entry."
                         size="small"
                         width="100%"
+                        required
+                    /><br />
 
+                    <TextField
+                        id="outlined-error-helper-text"
+                        label="Comfirm Password"
+                        type="password"
+                        placeholder='Comfirm password'
+                        // helperText="Incorrect entry."
+                        size="small"
+                        width="100%"
+                        required
                     />
 
-                    <Button class="gradient-background" style={{ marginTop : 15 , color : 'white' , fontSize : '1em' , padding : 10 , border : '0px' , borderRadius : 8 }}>Login</Button>
+                    <Button 
+                        type="submit" 
+                        class="gradient-background" style={{ marginTop : 25 , color : 'white' , fontSize : '1em' , padding : 10 , border : '0px' , borderRadius : 8 }}
+                    >
+                        Next
+                    </Button>
 
-                </div>
+                </form>
 
 
 
