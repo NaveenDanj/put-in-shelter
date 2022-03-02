@@ -1,6 +1,6 @@
 import React from 'react'
 import HeaderContent from '../Components/Home/HeaderContent'
-import '../css/Home.css'
+import '../css/back.css'
 
 function Home() {
   return (
