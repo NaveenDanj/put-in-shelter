@@ -23,7 +23,7 @@ function HeaderContent(context) {
                 
                 <div style={{ width : '100%' , textAlign : 'center' , display : 'flex' , justifyContent : 'space-around' , alignItems : 'center' , marginTop : 15}}>
                     <Button onClick={() => handleClick() } style={{ color: "#21b6ae", border : '1px solid white' }}  variant="outlined">I WANT HELP</Button>
-                    <Button onClick={() => navigate("/serviceProvider", { replace: true }) } style={{ color: "#21b6ae", border : '1px solid white' }} variant="outlined">I WANT TO HELP</Button>
+                    <Button onClick={() => navigate("/serviceProvidersignup", { replace: true }) } style={{ color: "#21b6ae", border : '1px solid white' }} variant="outlined">I WANT TO HELP</Button>
                 </div>
 
             </div>

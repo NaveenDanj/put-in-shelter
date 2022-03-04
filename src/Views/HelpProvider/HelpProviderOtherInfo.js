@@ -31,8 +31,8 @@ function HelpProviderOtherInfo() {
                 <TextField
                     type={'number'}
                     id="outlined-error-helper-text"
-                    label="Peoples in your family"
-                    placeholder='Enter number of people in your family'
+                    label="Peoples you can serve"
+                    placeholder='Enter how many peoples can stay with you'
                     // helperText="Incorrect entry."
                     size="small"
                     required
@@ -54,7 +54,7 @@ function HelpProviderOtherInfo() {
                     id="outlined-error-helper-text"
                     label="Time Period (in weeks)"
                     type="number"
-                    placeholder='How much time do you want to stay'
+                    placeholder='Time period'
                     // helperText="Incorrect entry."
                     size="small"
                     width="100%"
