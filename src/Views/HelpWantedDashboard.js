@@ -127,6 +127,7 @@ export default function HelpWantedDashboard() {
       <Drawer  variant="permanent" open={open}>
 
         <DrawerHeader>
+            <label style={{ fontWeight : 'bold' }}>PUT IN SHELTER</label>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
