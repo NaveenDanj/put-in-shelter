@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HelpProviderRegister from "../Views/HelpProvider/HelpProviderRegister";
 import HelpWantedOtherInfo from "../Views/HelpWantedOtherInfo";
 import HelpWantedRegister from "../Views/HelpWantedRegister";
 import Home from "../Views/Home";
@@ -10,6 +11,7 @@ export default function RouterView() {
             <Route index element={<Home />} />
             <Route path="helpwantsignup" element={<HelpWantedRegister />} />
             <Route path="helpwantsignupother" element={<HelpWantedOtherInfo />} />
+            <Route path="serviceProvider" element={<HelpProviderRegister />} />
             {/* <Route path="*" element={<NoPage />} />  */}
       </Routes>
     </BrowserRouter>
