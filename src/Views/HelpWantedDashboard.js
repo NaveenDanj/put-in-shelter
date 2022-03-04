@@ -19,6 +19,7 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 
 import '../css/back.css';
+import MapContainer from '../Components/HelpWantedDashboard/MapContainer';
 
 
 const drawerWidth = 240;
@@ -189,7 +190,7 @@ export default function HelpWantedDashboard() {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         
-        {/* <MapCompoenent /> */}
+        <MapContainer />
 
         
       </Box>
