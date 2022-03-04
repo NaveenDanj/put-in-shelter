@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { GoogleMap, useLoadScript , Marker , InfoWindow } from '@react-google-maps/api';
+import React, { useEffect , useState } from 'react'
+import { GoogleMap, useLoadScript } from '@react-google-maps/api';
 
 
 const libraries = ["places"];
@@ -12,27 +12,52 @@ const mapContainerStyles = {
 
 function MapContainer() {
 
+    const [userCurrentLocation , setUserCurrentLocation] = useState({lat:0 , lng:0});
+
     useEffect(() => {
-        console.log('api key is : ' , process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
+
+        if ("geolocation" in navigator) {
+            console.log("Available");
+
+            navigator.geolocation.getCurrentPosition(function(position) {
+                setUserCurrentLocation({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                });
+            });
+
+        } else {
+            console.log("Not Available");
+        }
+        
     } , []);
 
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey : process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+        libraries
     });
 
     if (loadError) return "Error loading maps";
 
     if (!isLoaded) return "Loading maps";
 
+
+    const handleAddLocation = (location) => {
+        console.log("lat : " , location.latLng.lat() , "lng : " , location.latLng.lng());
+    }
+
+
+
     return (
         <div>
             <GoogleMap
                 mapContainerStyle={mapContainerStyles}
-                zoom={10}
+                zoom={15}
                 center={{
-                    lat: -3.745,
-                    lng: -38.523
+                    lat: userCurrentLocation.lat,
+                    lng: userCurrentLocation.lng
                 }}
+                onClick={(event) => handleAddLocation(event)}
             >
             </GoogleMap>
         </div>
