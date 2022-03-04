@@ -1,13 +1,72 @@
-import React from 'react'
+import React from 'react';
 import Card from '@mui/material/Card';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
+import { useNavigate } from "react-router-dom";
 
+import '../css/back.css';
 
-import '../css/back.css'
+import { getAuth, createUserWithEmailAndPassword , updateProfile  } from "firebase/auth";
+
 
 
 function HelpWantedRegister() {
+
+    let navigate = useNavigate();
+
+    const [name , setName] = React.useState('');
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const [confirmPassword, setConfirmPassword] = React.useState('');
+    const [error, setError] = React.useState('');
+
+
+    const handleUserSignedIn = (e) => {
+        e.preventDefault();
+        console.log('user signed in : ' , e.target);
+
+        //check if passwords match
+        if(password !== confirmPassword){
+            setError('Passwords do not match');
+            return;
+        }
+
+        //create user
+        const auth = getAuth();
+        createUserWithEmailAndPassword(auth , email, password)
+        .then((user) => {
+            console.log('user created : ' , user);
+            setError('');
+
+            //update display name
+            updateProfile(auth.currentUser, {
+                displayName: name
+              }).then(() => {
+                // Profile updated!
+                console.log('profile updated');
+                navigate('/helpwantsignupother');
+                
+              }).catch((error) => {
+                // An error occurred
+                var errorMessage = error.message;
+                setError(errorMessage);
+            });
+
+
+        })
+        .catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log('error code : ' , errorCode);
+            console.log('error message : ' , errorMessage);
+            setError(errorMessage);
+        });
+
+    }
+
+
 
     return (
         <div className='gradient-background' style={ styles.mainContainer }>
@@ -16,9 +75,16 @@ function HelpWantedRegister() {
                 
                 <h1 style={ styles.headerText }>Register</h1>
 
-                <form style={styles.fieldContainer}>
+                <form style={styles.fieldContainer} onSubmit={ (e) => handleUserSignedIn(e) }>
+                    
+                    { error !== '' &&  (
+                        <>
+                            <Alert severity="error">{error}</Alert><br/>
+                        </>
+                    )}
 
                     <TextField
+                        name='email'
                         type={'email'}
                         id="outlined-error-helper-text"
                         label="Email"
@@ -26,9 +92,11 @@ function HelpWantedRegister() {
                         // helperText="Incorrect entry."
                         size="small"
                         required
+                        onChange={ (e) => setEmail(e.target.value) }
                     /><br/>
 
                     <TextField
+                        name='displayName'
                         type={'text'}
                         id="outlined-error-helper-text"
                         label="Display Name"
@@ -36,9 +104,11 @@ function HelpWantedRegister() {
                         // helperText="Incorrect entry."
                         size="small"
                         required
+                        onChange={ (e) => setName(e.target.value) }
                     /><br/>
 
                     <TextField
+                        name='password'
                         id="outlined-error-helper-text"
                         label="Password"
                         type="password"
@@ -47,9 +117,11 @@ function HelpWantedRegister() {
                         size="small"
                         width="100%"
                         required
+                        onChange={ (e) => setPassword(e.target.value) }
                     /><br />
 
                     <TextField
+                        name='confirmPassword'
                         id="outlined-error-helper-text"
                         label="Comfirm Password"
                         type="password"
@@ -58,6 +130,7 @@ function HelpWantedRegister() {
                         size="small"
                         width="100%"
                         required
+                        onChange={ (e) => setConfirmPassword(e.target.value) }
                     />
 
                     <Button 
@@ -68,8 +141,6 @@ function HelpWantedRegister() {
                     </Button>
 
                 </form>
-
-
 
             </Card>
                 
