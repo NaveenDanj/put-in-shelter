@@ -18,6 +18,9 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 
+import '../css/back.css';
+
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -100,9 +103,10 @@ export default function HelpWantedDashboard() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar className='gradient-background' position="fixed" open={open}>
         <Toolbar>
           <IconButton
+            className='gradient-background'
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -115,17 +119,21 @@ export default function HelpWantedDashboard() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
+            HELP WANTED DASHBOARD
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+
+      <Drawer  variant="permanent" open={open}>
+
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
+
         <Divider />
+
         <List>
           {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
             <ListItemButton
@@ -149,7 +157,9 @@ export default function HelpWantedDashboard() {
             </ListItemButton>
           ))}
         </List>
+
         <Divider />
+
         <List>
           {['All mail', 'Trash', 'Spam'].map((text, index) => (
             <ListItemButton
@@ -173,10 +183,14 @@ export default function HelpWantedDashboard() {
             </ListItemButton>
           ))}
         </List>
+
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        asd
+        
+        {/* <MapCompoenent /> */}
+
+        
       </Box>
     </Box>
   );
