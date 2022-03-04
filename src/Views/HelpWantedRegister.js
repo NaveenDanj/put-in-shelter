@@ -21,11 +21,12 @@ function HelpWantedRegister() {
     const [confirmPassword, setConfirmPassword] = React.useState('');
     const [error, setError] = React.useState('');
 
-
+    //user sign up
     const handleUserSignedIn = (e) => {
-        e.preventDefault();
-        console.log('user signed in : ' , e.target);
 
+        e.preventDefault();
+        setError('');
+        
         //check if passwords match
         if(password !== confirmPassword){
             setError('Passwords do not match');
@@ -44,8 +45,7 @@ function HelpWantedRegister() {
                 displayName: name
               }).then(() => {
                 // Profile updated!
-                console.log('profile updated');
-                navigate('/helpwantsignupother');
+                navigate('/helpwantsignupother' , { replace: true });
                 
               }).catch((error) => {
                 // An error occurred
