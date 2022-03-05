@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Card from '@mui/material/Card';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import { useNavigate } from "react-router-dom";
+import { useSelector , useDispatch } from 'react-redux';
+import { setCurrentUser } from '../store/Slices/CurrentUserSlice';
+
 
 import '../css/back.css';
 
@@ -14,12 +17,19 @@ import { getAuth, createUserWithEmailAndPassword , updateProfile  } from "fireba
 function HelpWantedRegister() {
 
     let navigate = useNavigate();
+    const currentUser = useSelector(state => state.currentUser.currentUser);
+    const dispatch = useDispatch();
 
     const [name , setName] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
     const [error, setError] = React.useState('');
+
+    useEffect(() => {
+        console.log('currentUser : ' , currentUser);
+    } ,[])
+
 
     //user sign up
     const handleUserSignedIn = (e) => {
@@ -43,11 +53,12 @@ function HelpWantedRegister() {
             //update display name
             updateProfile(auth.currentUser, {
                 displayName: name
-              }).then(() => {
+            }).then(() => {
                 // Profile updated!
+                dispatch(setCurrentUser(auth.currentUser));
                 navigate('/helpwantsignupother' , { replace: true });
                 
-              }).catch((error) => {
+            }).catch((error) => {
                 // An error occurred
                 var errorMessage = error.message;
                 setError(errorMessage);
