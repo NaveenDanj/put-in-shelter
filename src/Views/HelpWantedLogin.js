@@ -5,6 +5,10 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { setCurrentUser } from '../store/Slices/CurrentUserSlice';
+
+
 
 function HelpWantedLogin() {
 
@@ -14,6 +18,7 @@ function HelpWantedLogin() {
 
     const navigate = useNavigate();
     const auth = getAuth();
+    const dispatch = useDispatch();
 
 
     const handleFormSubmit = async(e) => {
@@ -30,6 +35,7 @@ function HelpWantedLogin() {
 
             const userCredential =  await signInWithEmailAndPassword(auth, email, password)
             const user = userCredential.user;
+            dispatch(setCurrentUser(user));
             navigate('/helpwanted' , { replace: true });
 
         }catch(err){

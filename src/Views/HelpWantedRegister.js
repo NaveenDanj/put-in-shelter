@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Card from '@mui/material/Card';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import { useNavigate } from "react-router-dom";
-import { useSelector , useDispatch } from 'react-redux';
+import {useDispatch } from 'react-redux';
 import { setCurrentUser } from '../store/Slices/CurrentUserSlice';
 
 
@@ -17,7 +17,6 @@ import { getAuth, createUserWithEmailAndPassword , updateProfile  } from "fireba
 function HelpWantedRegister() {
 
     let navigate = useNavigate();
-    const currentUser = useSelector(state => state.currentUser.currentUser);
     const dispatch = useDispatch();
 
     const [name , setName] = React.useState('');
@@ -25,10 +24,6 @@ function HelpWantedRegister() {
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
     const [error, setError] = React.useState('');
-
-    useEffect(() => {
-        console.log('currentUser : ' , currentUser);
-    } ,[])
 
 
     //user sign up
