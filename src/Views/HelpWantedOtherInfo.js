@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Alert from '@mui/material/Alert';
 import { useNavigate } from "react-router-dom";
 
-import { useSelector , useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 //firebase firestore imports
 import { doc, setDoc , getFirestore } from "firebase/firestore"; 
@@ -73,7 +73,7 @@ function HelpWantedOtherInfo() {
 
         //clear error
         setError('');
-        
+
         //send data to server
         try{
             await setDoc( doc(db , 'helpWantedUsers' , currentUser.uid ) , {

@@ -3,11 +3,40 @@ import Card from '@mui/material/Card';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 function HelpWantedLogin() {
 
     const [error , setError] = useState('');
+    const [email , setEmail] = useState('');
+    const [password , setPassword] = useState('');
 
+    const navigate = useNavigate();
+    const auth = getAuth();
+
+
+    const handleFormSubmit = async(e) => {
+        e.preventDefault();
+
+        //validate inputs
+        if(email === '' || password === ''){
+            setError('Please fill in all fields');
+            return;
+        }
+
+        //send request to server
+        try{
+
+            const userCredential =  await signInWithEmailAndPassword(auth, email, password)
+            const user = userCredential.user;
+            navigate('/helpwanted' , { replace: true });
+
+        }catch(err){
+            setError(err.message);
+        }
+        
+    }
 
     return (
         <div className='gradient-background' style={ styles.mainContainer }>
@@ -16,7 +45,7 @@ function HelpWantedLogin() {
                 
                 <h1 style={ styles.headerText }>Help Wanted Login</h1>
 
-                <form style={styles.fieldContainer} >
+                <form style={styles.fieldContainer} onSubmit={(e) => handleFormSubmit(e) } >
 
                     { error !== '' &&  (
                         <>
@@ -32,18 +61,20 @@ function HelpWantedLogin() {
                         // helperText="Incorrect entry."
                         size="small"
                         required
+                        onChange={ (e) => setEmail(e.target.value) }
                     /><br/>
 
                     
                     <TextField
                         id="outlined-error-helper-text"
                         label="Password"
-                        type="password"
+                        type="password" 
                         placeholder='Enter your password'
                         // helperText="Incorrect entry."
                         size="small"
                         width="100%"
                         required
+                        onChange={ (e) => setPassword(e.target.value) }
                     /><br />
 
 
@@ -57,7 +88,7 @@ function HelpWantedLogin() {
                 </form>
 
             </Card>
-                
+
         </div>
     );
 }
