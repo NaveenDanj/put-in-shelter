@@ -51,6 +51,7 @@ function HelpWantedOtherInfo() {
 
     //handle form submit
     const handleFormSubmit = async (e) => {
+
         //prevent from reloading
         e.preventDefault();
 
@@ -72,7 +73,7 @@ function HelpWantedOtherInfo() {
 
         //clear error
         setError('');
-
+        
         //send data to server
         try{
             await setDoc( doc(db , 'helpWantedUsers' , currentUser.uid ) , {
