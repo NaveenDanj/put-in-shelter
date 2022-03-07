@@ -7,6 +7,8 @@ import HelpWantedOtherInfo from "../Views/HelpWantedOtherInfo";
 import HelpWantedRegister from "../Views/HelpWantedRegister";
 import Home from "../Views/Home";
 
+import ProtectedRoute from "./ProtectedRoute";
+
 export default function RouterView() {
   return (
     <BrowserRouter>
@@ -20,7 +22,16 @@ export default function RouterView() {
             <Route path="serviceProvidersignup" element={<HelpProviderRegister />} />
             <Route path="serviceProvidersignupother" element={<HelpProviderOtherInfo />} />
 
-            <Route path="helpwanted" element={<HelpWantedDashboard />} />
+            <Route 
+              exact
+              path="helpwanted"
+              element={
+                <ProtectedRoute>
+                  <HelpWantedDashboard />
+                </ProtectedRoute>
+              }
+            />
+            {/* <Route path="helpwanted" element={<HelpWantedDashboard />} /> */}
             {/* <Route path="*" element={<NoPage />} />  */}
       </Routes>
     </BrowserRouter>
