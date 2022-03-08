@@ -18,7 +18,7 @@ import ListItemText from '@mui/material/ListItemText';
 
 //icons
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
+import AddLocationIcon from '@mui/icons-material/AddLocation';
 
 
 
@@ -100,7 +100,7 @@ export default function HelpWantedDashboard() {
 
   //Account info dialog
   const [accountInfoDialogOpen, setAccountInfoDialogOpen] = React.useState(false);
-
+  const [addLocationDialogOpen , setAddLocationDialogOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -151,26 +151,51 @@ export default function HelpWantedDashboard() {
         <Divider />
 
         <List>
-            <ListItemButton
-              key={'My Profile'}
+
+
+          <ListItemButton
+            key={'My Profile'}
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? 'initial' : 'center',
+              px: 2.5,
+            }}
+            onClick={() => setAccountInfoDialogOpen(true)}
+          >
+            <ListItemIcon
               sx={{
-                minHeight: 48,
-                justifyContent: open ? 'initial' : 'center',
-                px: 2.5,
+                minWidth: 0,
+                mr: open ? 3 : 'auto',
+                justifyContent: 'center',
               }}
-              onClick={() => setAccountInfoDialogOpen(true)}
             >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : 'auto',
-                  justifyContent: 'center',
-                }}
-              >
-                <AccountCircleIcon /> 
-              </ListItemIcon>
-              <ListItemText primary={'My Profile'} sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
+              <AccountCircleIcon /> 
+            </ListItemIcon>
+            <ListItemText primary={'My Profile'} sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+
+          <ListItemButton
+            key={'Set My Location'}
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? 'initial' : 'center',
+              px: 2.5,
+            }}
+            onClick={() => setAddLocationDialogOpen(true)}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : 'auto',
+                justifyContent: 'center',
+              }}
+            >
+              <AddLocationIcon /> 
+            </ListItemIcon>
+            <ListItemText primary={'Set My Location'} sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+
+
         </List>
 
         <Divider />

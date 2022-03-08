@@ -191,7 +191,13 @@ function AccountInfo(props) {
 
             <DialogActions>
 
-                <Button onClick={() => setOpen(false)} autoFocus>
+                <Button onClick={() => { 
+                        setOpen(false);
+                        setSuccess('');
+                        setError('');
+                    } 
+                } 
+                autoFocus>
                     Close
                 </Button>
 
