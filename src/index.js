@@ -18,7 +18,6 @@ const checkAuthUserExists = async () => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       //if found user set that user to localstorage
-      console.log(user);
       localStorage.setItem('currentUser', JSON.stringify(user));
 
     } else {
@@ -26,7 +25,7 @@ const checkAuthUserExists = async () => {
       localStorage.setItem('currentUser', null);
     }
 
-});
+  });
 
 }
 
