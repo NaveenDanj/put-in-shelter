@@ -15,19 +15,20 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-
+import LogoutIcon from '@mui/icons-material/Logout';
 //icons
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 
 
 //firebase import
-import { getAuth } from "firebase/auth";
 import { doc, getDoc , getFirestore } from "firebase/firestore";
+import { getAuth , signOut  } from 'firebase/auth';
 
 //redux imports
-import {useSelector } from 'react-redux';
+import {useSelector , useDispatch } from 'react-redux';
 import { setCurrentUser } from '../store/Slices/CurrentUserSlice';
+
 
 //components
 import '../css/back.css';
@@ -110,7 +111,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function HelpWantedDashboard() {
 
   let user = useSelector(state => state.currentUser);
-
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
 
@@ -159,7 +160,24 @@ export default function HelpWantedDashboard() {
   };
 
 
+  //handle logout
+  const handleLogout = async () => {
 
+    const auth = getAuth();
+
+    console.log('logout');
+
+    try{
+      await signOut(auth);
+      dispatch(setCurrentUser({}));
+      localStorage.setItem('currentUser' , null);
+      navigate("/");
+    }catch(err){
+      console.log(err);
+    }
+
+
+  }
 
 
 
@@ -244,34 +262,31 @@ export default function HelpWantedDashboard() {
             <ListItemText primary={'Set My Location'} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
 
+          <ListItemButton
+            key={'Logout'}
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? 'initial' : 'center',
+              px: 2.5,
+            }}
+            onClick={() => handleLogout()}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : 'auto',
+                justifyContent: 'center',
+              }}
+            >
+              <LogoutIcon /> 
+            </ListItemIcon>
+            <ListItemText primary={'Logout'} sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+
 
         </List>
 
         <Divider />
-
-        {/* <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItemButton
-              key={text}
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? 'initial' : 'center',
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : 'auto',
-                  justifyContent: 'center',
-                }}
-              >
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          ))}
-        </List> */}
 
       </Drawer>
 
