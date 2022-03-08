@@ -30,16 +30,21 @@ export const getLoggedInUserType = async () => {
         const providerSnap = await getDoc(providerRef);
 
         if(helpWantedSnap.exists){
+            console.log('help wanted user');
             return 'helpWanted';
         }
 
         if(providerSnap.exists){
+            console.log('service provider user');
             return 'serviceProvider';
         }
         
         //user is unauthenticated!
         return null;
 
+    }else{
+        console.log('user not found!');
+        return null;
     }
 
 }

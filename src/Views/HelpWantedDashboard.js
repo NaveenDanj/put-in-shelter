@@ -21,11 +21,24 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 
 
+//firebase import
+import { getAuth } from "firebase/auth";
+import { doc, getDoc , getFirestore } from "firebase/firestore";
 
+//redux imports
+import {useSelector } from 'react-redux';
+import { setCurrentUser } from '../store/Slices/CurrentUserSlice';
+
+//components
 import '../css/back.css';
 import MapContainer from '../Components/HelpWantedDashboard/MapContainer';
 import AccountInfo from '../Components/HelpWantedDashboard/Dialogs/AccountInfo';
 import SetMyLocation from '../Components/HelpWantedDashboard/Dialogs/SetMyLocation'
+
+//router dom
+import { useNavigate } from "react-router-dom";
+
+
 
 const drawerWidth = 240;
 
@@ -95,12 +108,47 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function HelpWantedDashboard() {
+
+  let user = useSelector(state => state.currentUser);
+
+
+  React.useEffect(() => {
+
+    const handleUserType = async () => {
+
+      try{
+        
+        const userDocRef = doc(getFirestore() , 'helpWantedUsers' , user.currentUser.uid);
+        const userDoc = await getDoc(userDocRef);
+       
+        if(!userDoc.exists){
+          navigate("/");
+        }
+
+      }catch(err){
+        console.log(err);
+        navigate("/");
+      }
+  
+    }
+
+    handleUserType();
+
+  } , []);
+
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
   //Account info dialog
   const [accountInfoDialogOpen, setAccountInfoDialogOpen] = React.useState(false);
   const [addLocationDialogOpen , setAddLocationDialogOpen] = React.useState(false);
+
+  let navigate = useNavigate();
+
+
+
+
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -109,6 +157,7 @@ export default function HelpWantedDashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
 
 
 

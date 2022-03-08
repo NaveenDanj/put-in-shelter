@@ -144,7 +144,10 @@ function SetMyLocation(props) {
 
                     <Marker
                         position={location}
+                        label="My Location"
+                        title="My rollover text"
                     />
+
 
                 </GoogleMap>
 
