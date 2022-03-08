@@ -52,7 +52,7 @@ function MapContainer() {
         <div>
             <GoogleMap
                 mapContainerStyle={mapContainerStyles}
-                zoom={25}
+                zoom={15}
                 center={{
                     lat: userCurrentLocation.lat,
                     lng: userCurrentLocation.lng

@@ -6,9 +6,17 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
+import Alert from '@mui/material/Alert';
 
-
+//maps api
 import { GoogleMap , Marker } from '@react-google-maps/api';
+
+//firebase inputs
+import {doc, getDoc , updateDoc ,  getFirestore } from "firebase/firestore";
+import { getAuth } from 'firebase/auth';
+
+//redux imports
+import { useSelector } from 'react-redux';
 
 
 const mapContainerStyles = {
@@ -19,14 +27,41 @@ const mapContainerStyles = {
 
 
 function SetMyLocation(props) {
+
+    let user = useSelector(state => state.currentUser);
   
     const { open, setOpen } = props;
     const [location , setLocation] = useState({
         lat : 6.7495 ,
         lng : 79.913
     });
+    const db = getFirestore();
+    const auth = getAuth();
 
     const [locationText , setLocationText] = useState('');
+    const [error , setError] = useState('');
+    const [success , setSuccess] = useState('');
+    
+
+    
+    //fetch user location data
+    useEffect(() => {
+        
+        const userDocRef = doc(db , 'helpWantedUsers' , user.currentUser.uid);
+        
+        getDoc(userDocRef)
+        .then(userInfo => {
+            setLocation({
+                lat : userInfo.data().currentLocation.lat ,
+                lng : userInfo.data().currentLocation.lng
+            });
+
+            setLocationText(userInfo.data().currentLocation.lat + ' , ' + userInfo.data().currentLocation.lng);
+
+        })
+        .catch(err => console.log(err));
+        
+    } ,[]);
 
 
     //set location
@@ -41,7 +76,37 @@ function SetMyLocation(props) {
     }
 
     //handle set location form submit
-    const handleSetLocationSubmit = (e) => {
+    const handleSetLocationSubmit = async(e) => {
+        
+        e.preventDefault();
+
+        //validate input
+        if(locationText === ''){
+            setError('Please select a location');
+            return;
+        }
+
+        try{
+            //get user
+            const user = getAuth().currentUser;
+
+            //get user doc
+            const userDocRef = doc(getFirestore() , 'helpWantedUsers' , user.uid);
+
+            //update user doc
+            updateDoc(userDocRef , {
+                currentLocation : {
+                    lat : location.lat,
+                    lng : location.lng
+                }
+            })
+
+            setSuccess('Location set successfully');
+
+        }catch(err){
+            setError(err.message);
+            
+        }
 
     }
 
@@ -62,12 +127,12 @@ function SetMyLocation(props) {
 
                 <DialogContentText id="alert-dialog-description">
                     Please select your current location on the map.
-                </DialogContentText>
+                </DialogContentText><br/>
 
                 <GoogleMap 
 
                     mapContainerStyle={mapContainerStyles}
-                    zoom={25}
+                    zoom={15}
                     center={{
                         lat: location.lat,
                         lng: location.lng
@@ -85,6 +150,18 @@ function SetMyLocation(props) {
 
                 <form style={styles.formContainer} onSubmit={(e) => handleSetLocationSubmit(e) } >
 
+                    { error !== '' &&  (
+                        <>
+                            <Alert severity="error">{error}</Alert><br/>
+                        </>
+                    )}
+
+                    { success !== '' &&  (
+                        <>
+                            <Alert severity="success">{success}</Alert><br/>
+                        </>
+                    )}
+
                     <TextField
                         type={'text'}
                         id="outlined-error-helper-text"
@@ -93,7 +170,7 @@ function SetMyLocation(props) {
                         required
                         aria-readonly
                         value={locationText}
-                    /><br/>
+                    />
                    
                     <Button 
                         type="submit" 
@@ -109,7 +186,12 @@ function SetMyLocation(props) {
 
             <DialogActions>
 
-                <Button autoFocus onClick={() => setOpen(false)}>
+                <Button autoFocus onClick={() => { 
+                        setOpen(false);
+                        setError('');
+                        setSuccess('');
+                    } 
+                }>
                     Close
                 </Button>
 
