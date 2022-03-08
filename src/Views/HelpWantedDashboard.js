@@ -15,8 +15,12 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+
+//icons
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
+
+
 
 import '../css/back.css';
 import MapContainer from '../Components/HelpWantedDashboard/MapContainer';
@@ -137,9 +141,8 @@ export default function HelpWantedDashboard() {
         <Divider />
 
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
             <ListItemButton
-              key={text}
+              key={'My Profile'}
               sx={{
                 minHeight: 48,
                 justifyContent: open ? 'initial' : 'center',
@@ -153,16 +156,15 @@ export default function HelpWantedDashboard() {
                   justifyContent: 'center',
                 }}
               >
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <AccountCircleIcon /> 
               </ListItemIcon>
-              <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary={'My Profile'} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
-          ))}
         </List>
 
         <Divider />
 
-        <List>
+        {/* <List>
           {['All mail', 'Trash', 'Spam'].map((text, index) => (
             <ListItemButton
               key={text}
@@ -184,16 +186,18 @@ export default function HelpWantedDashboard() {
               <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           ))}
-        </List>
+        </List> */}
 
       </Drawer>
+
+
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         
         <MapContainer />
 
-        
       </Box>
+
     </Box>
   );
 }
