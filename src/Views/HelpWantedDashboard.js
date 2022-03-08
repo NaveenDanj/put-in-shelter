@@ -25,7 +25,7 @@ import AddLocationIcon from '@mui/icons-material/AddLocation';
 import '../css/back.css';
 import MapContainer from '../Components/HelpWantedDashboard/MapContainer';
 import AccountInfo from '../Components/HelpWantedDashboard/Dialogs/AccountInfo';
-
+import SetMyLocation from '../Components/HelpWantedDashboard/Dialogs/SetMyLocation'
 
 const drawerWidth = 240;
 
@@ -236,6 +236,12 @@ export default function HelpWantedDashboard() {
           open={accountInfoDialogOpen}
           setOpen={setAccountInfoDialogOpen}
           onClose={() => setAccountInfoDialogOpen(false)}
+        />
+
+        <SetMyLocation 
+          open={addLocationDialogOpen}
+          setOpen={setAddLocationDialogOpen}
+          onClose={() => setAddLocationDialogOpen(false)}
         />
 
       </Box>
