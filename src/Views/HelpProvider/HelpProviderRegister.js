@@ -83,6 +83,7 @@ function HelpProviderRegister() {
 
 
     return (
+
         <div className='gradient-background' style={ styles.mainContainer }>
 
             <Card style={ styles.formContainer} variant="outlined">
@@ -160,6 +161,7 @@ function HelpProviderRegister() {
                 
 
         </div>
+        
     );
 
 }

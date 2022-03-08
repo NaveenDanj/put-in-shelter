@@ -121,8 +121,10 @@ export default function HelpWantedDashboard() {
         
         const userDocRef = doc(getFirestore() , 'helpWantedUsers' , user.currentUser.uid);
         const userDoc = await getDoc(userDocRef);
+
+        console.log('selected file : ' , userDoc.exists());
        
-        if(!userDoc.exists){
+        if(!userDoc.exists()){
           navigate("/");
         }
 
@@ -145,10 +147,6 @@ export default function HelpWantedDashboard() {
   const [addLocationDialogOpen , setAddLocationDialogOpen] = React.useState(false);
 
   let navigate = useNavigate();
-
-
-
-
 
 
   const handleDrawerOpen = () => {
