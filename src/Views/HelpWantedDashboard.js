@@ -24,6 +24,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import '../css/back.css';
 import MapContainer from '../Components/HelpWantedDashboard/MapContainer';
+import AccountInfo from '../Components/HelpWantedDashboard/Dialogs/AccountInfo';
 
 
 const drawerWidth = 240;
@@ -97,6 +98,10 @@ export default function HelpWantedDashboard() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
+  //Account info dialog
+  const [accountInfoDialogOpen, setAccountInfoDialogOpen] = React.useState(false);
+
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -104,6 +109,11 @@ export default function HelpWantedDashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+
+
+
+
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -148,6 +158,7 @@ export default function HelpWantedDashboard() {
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
               }}
+              onClick={() => setAccountInfoDialogOpen(true)}
             >
               <ListItemIcon
                 sx={{
@@ -195,6 +206,12 @@ export default function HelpWantedDashboard() {
         <DrawerHeader />
         
         <MapContainer />
+
+        <AccountInfo 
+          open={accountInfoDialogOpen}
+          setOpen={setAccountInfoDialogOpen}
+          onClose={() => setAccountInfoDialogOpen(false)}
+        />
 
       </Box>
 
