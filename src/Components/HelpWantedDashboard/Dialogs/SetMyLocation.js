@@ -44,7 +44,7 @@ function SetMyLocation(props) {
     
 
     
-    //fetch user location data
+    //fetch user location data doge karen lilbro
     useEffect(() => {
         
         const userDocRef = doc(db , 'helpWantedUsers' , user.currentUser.uid);
