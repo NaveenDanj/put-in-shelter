@@ -16,6 +16,7 @@ function App() {
     }else{
       //if no user found set null to store
       dispatch( setCurrentUser( null ) );
+      localStorage.setItem('currentUser', null);
     }
 
   } , []);
