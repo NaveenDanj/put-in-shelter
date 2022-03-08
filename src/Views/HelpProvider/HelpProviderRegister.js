@@ -1,13 +1,86 @@
-import React from 'react'
+import React , {useState} from 'react'
 import Card from '@mui/material/Card';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { Alert } from '@mui/material';
+
+
+//firebase imports
+import { getAuth , createUserWithEmailAndPassword , updateProfile } from 'firebase/auth';
+
+//redux imports
+import { useDispatch } from 'react-redux';
+import { setCurrentUser } from '../../store/Slices/CurrentUserSlice';
+
+//router dom imports
+import { useNavigate } from 'react-router-dom';
 
 
 import '../../css/back.css'
 
 
 function HelpProviderRegister() {
+
+    const [error, setError] = useState('');
+    const [displayName , setDisplayName ] = useState('');
+    const [email , setEmail] = useState('');
+    const [password , setPassword] = useState('');
+    const [comfirmPassword , setComfirmPassword] = useState('');
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    //handle form submit
+    const handleProviderRegisterSubmit = (e) => {
+
+        e.preventDefault();
+
+        //validate form
+        if(displayName === '' || email === '' || password === '' || comfirmPassword === ''){
+            setError('Please fill all fields');
+            return;
+        }
+
+        //check if password and comfirm password match
+        if(password !== comfirmPassword){
+            setError('Password and comfirm password do not match');
+            return;
+        }
+
+        //create user
+        const auth = getAuth();
+        createUserWithEmailAndPassword(auth , email, password)
+        .then((user) => {
+            console.log('user created : ' , user);
+            setError('');
+
+            //update display name
+            updateProfile(auth.currentUser, {
+                displayName: displayName
+            }).then(() => {
+                // Profile updated!
+                dispatch(setCurrentUser(auth.currentUser));
+                navigate('/serviceProvidersignupother' , { replace: true });
+                
+            }).catch((error) => {
+                // An error occurred
+                let errorMessage = error.message;
+                setError(errorMessage);
+            });
+
+
+        })
+        .catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log('error code : ' , errorCode);
+            console.log('error message : ' , errorMessage);
+            setError(errorMessage);
+        });
+
+    }
+
 
     return (
         <div className='gradient-background' style={ styles.mainContainer }>
@@ -16,7 +89,15 @@ function HelpProviderRegister() {
                 
                 <h1 style={ styles.headerText }>Register</h1>
 
-                <form style={styles.fieldContainer}>
+                <form style={styles.fieldContainer} onSubmit={ (e) => handleProviderRegisterSubmit(e) }>
+
+                    { error !== '' &&  (
+                        <>
+                            <Alert severity="error">
+                                {error}
+                            </Alert><br />
+                        </>
+                    )}
 
                     <TextField
                         type={'email'}
@@ -26,6 +107,7 @@ function HelpProviderRegister() {
                         // helperText="Incorrect entry."
                         size="small"
                         required
+                        onChange={ (e) => setEmail(e.target.value) }
                     /><br/>
 
                     <TextField
@@ -36,6 +118,7 @@ function HelpProviderRegister() {
                         // helperText="Incorrect entry."
                         size="small"
                         required
+                        onChange={ (e) => setDisplayName(e.target.value) }
                     /><br/>
 
                     <TextField
@@ -47,6 +130,7 @@ function HelpProviderRegister() {
                         size="small"
                         width="100%"
                         required
+                        onChange={ (e) => setPassword(e.target.value) }
                     /><br />
 
                     <TextField
@@ -58,6 +142,7 @@ function HelpProviderRegister() {
                         size="small"
                         width="100%"
                         required
+                        onChange={ (e) => setComfirmPassword(e.target.value) }
                     />
 
                     <Button 

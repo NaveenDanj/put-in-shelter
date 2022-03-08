@@ -86,7 +86,7 @@ function HelpWantedOtherInfo() {
                 timePeriod : +timePeriod
             });
 
-            navigate('/helpwanted' , { replace: true });
+            navigate('/helpwantedlogin' , { replace: true });
 
         }catch(e){
             setError(e.message);
