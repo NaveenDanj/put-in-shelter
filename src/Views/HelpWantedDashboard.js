@@ -113,6 +113,8 @@ export default function HelpWantedDashboard() {
   let user = useSelector(state => state.currentUser);
   const dispatch = useDispatch();
 
+  const [loading , setLoading] = React.useState(true);
+
   React.useEffect(() => {
 
     const handleUserType = async () => {
@@ -125,11 +127,15 @@ export default function HelpWantedDashboard() {
         console.log('selected file : ' , userDoc.exists());
        
         if(!userDoc.exists()){
+          setLoading(false);
           navigate("/");
         }
 
+        setLoading(false);
+
       }catch(err){
         console.log(err);
+        setLoading(false);
         navigate("/");
       }
   
@@ -178,136 +184,140 @@ export default function HelpWantedDashboard() {
   }
 
 
+  if(!loading){
 
-
-  return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar className='gradient-background' position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            className='gradient-background'
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: 'none' }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            HELP WANTED DASHBOARD
-          </Typography>
-        </Toolbar>
-      </AppBar>
-
-      <Drawer  variant="permanent" open={open}>
-
-        <DrawerHeader>
-            <label style={{ fontWeight : 'bold' }}>PUT IN SHELTER</label>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </DrawerHeader>
-
-        <Divider />
-
-        <List>
-
-
-          <ListItemButton
-            key={'My Profile'}
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? 'initial' : 'center',
-              px: 2.5,
-            }}
-            onClick={() => setAccountInfoDialogOpen(true)}
-          >
-            <ListItemIcon
+    return (
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar className='gradient-background' position="fixed" open={open}>
+          <Toolbar>
+            <IconButton
+              className='gradient-background'
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
               sx={{
-                minWidth: 0,
-                mr: open ? 3 : 'auto',
-                justifyContent: 'center',
+                marginRight: 5,
+                ...(open && { display: 'none' }),
               }}
             >
-              <AccountCircleIcon /> 
-            </ListItemIcon>
-            <ListItemText primary={'My Profile'} sx={{ opacity: open ? 1 : 0 }} />
-          </ListItemButton>
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap component="div">
+              HELP WANTED DASHBOARD
+            </Typography>
+          </Toolbar>
+        </AppBar>
 
-          <ListItemButton
-            key={'Set My Location'}
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? 'initial' : 'center',
-              px: 2.5,
-            }}
-            onClick={() => setAddLocationDialogOpen(true)}
-          >
-            <ListItemIcon
+        <Drawer  variant="permanent" open={open}>
+
+          <DrawerHeader>
+              <label style={{ fontWeight : 'bold' }}>PUT IN SHELTER</label>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            </IconButton>
+          </DrawerHeader>
+
+          <Divider />
+
+          <List>
+
+
+            <ListItemButton
+              key={'My Profile'}
               sx={{
-                minWidth: 0,
-                mr: open ? 3 : 'auto',
-                justifyContent: 'center',
+                minHeight: 48,
+                justifyContent: open ? 'initial' : 'center',
+                px: 2.5,
               }}
+              onClick={() => setAccountInfoDialogOpen(true)}
             >
-              <AddLocationIcon /> 
-            </ListItemIcon>
-            <ListItemText primary={'Set My Location'} sx={{ opacity: open ? 1 : 0 }} />
-          </ListItemButton>
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : 'auto',
+                  justifyContent: 'center',
+                }}
+              >
+                <AccountCircleIcon /> 
+              </ListItemIcon>
+              <ListItemText primary={'My Profile'} sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
 
-          <ListItemButton
-            key={'Logout'}
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? 'initial' : 'center',
-              px: 2.5,
-            }}
-            onClick={() => handleLogout()}
-          >
-            <ListItemIcon
+            <ListItemButton
+              key={'Set My Location'}
               sx={{
-                minWidth: 0,
-                mr: open ? 3 : 'auto',
-                justifyContent: 'center',
+                minHeight: 48,
+                justifyContent: open ? 'initial' : 'center',
+                px: 2.5,
               }}
+              onClick={() => setAddLocationDialogOpen(true)}
             >
-              <LogoutIcon /> 
-            </ListItemIcon>
-            <ListItemText primary={'Logout'} sx={{ opacity: open ? 1 : 0 }} />
-          </ListItemButton>
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : 'auto',
+                  justifyContent: 'center',
+                }}
+              >
+                <AddLocationIcon /> 
+              </ListItemIcon>
+              <ListItemText primary={'Set My Location'} sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+
+            <ListItemButton
+              key={'Logout'}
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? 'initial' : 'center',
+                px: 2.5,
+              }}
+              onClick={() => handleLogout()}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : 'auto',
+                  justifyContent: 'center',
+                }}
+              >
+                <LogoutIcon /> 
+              </ListItemIcon>
+              <ListItemText primary={'Logout'} sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
 
 
-        </List>
+          </List>
 
-        <Divider />
+          <Divider />
 
-      </Drawer>
+        </Drawer>
 
 
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
-        
-        <MapContainer />
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+          <DrawerHeader />
+          
+          <MapContainer />
 
-        <AccountInfo 
-          open={accountInfoDialogOpen}
-          setOpen={setAccountInfoDialogOpen}
-          onClose={() => setAccountInfoDialogOpen(false)}
-        />
+          <AccountInfo 
+            open={accountInfoDialogOpen}
+            setOpen={setAccountInfoDialogOpen}
+            onClose={() => setAccountInfoDialogOpen(false)}
+          />
 
-        <SetMyLocation 
-          open={addLocationDialogOpen}
-          setOpen={setAddLocationDialogOpen}
-          onClose={() => setAddLocationDialogOpen(false)}
-        />
+          <SetMyLocation 
+            open={addLocationDialogOpen}
+            setOpen={setAddLocationDialogOpen}
+            onClose={() => setAddLocationDialogOpen(false)}
+          />
+
+        </Box>
 
       </Box>
+    );
 
-    </Box>
-  );
+  }else{
+    return ( <div>Loading...</div> );
+  }
 }
