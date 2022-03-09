@@ -46,7 +46,7 @@ function HPAccountInfo(props) {
         setSuccess('');
         setError('');
         
-        const userDocRef = doc(db , 'helpWantedUsers' , user.currentUser.uid);
+        const userDocRef = doc(db , 'serviceProviderUser' , user.currentUser.uid);
 
         getDoc(userDocRef)
         .then(userInfo => {
@@ -109,7 +109,7 @@ function HPAccountInfo(props) {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
         >
-            <DialogTitle id="alert-dialog-title">Help Seeker Account Information</DialogTitle>
+            <DialogTitle id="alert-dialog-title">Help Provider Account Information</DialogTitle>
 
             <DialogContent>
 
