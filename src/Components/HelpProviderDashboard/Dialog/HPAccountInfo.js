@@ -36,6 +36,7 @@ function HPAccountInfo(props) {
     const [displayName , setDisplayName] = React.useState('');
     const [memberCount , setMemberCount] = React.useState(0);
     const [weeks , setWeeks] = React.useState(0);
+    const [lastUpdate , setLastUpdate] = React.useState(null);
 
 
 
@@ -56,6 +57,7 @@ function HPAccountInfo(props) {
             setDisplayName(userInfo.data().displayName);
             setMemberCount(userInfo.data().peopleCount);
             setWeeks(userInfo.data().timePeriod);
+            setLastUpdate(userInfo.data().lastUpdate);
             console.log(userInfo);
         })
         .catch(err => console.log(err));
@@ -67,6 +69,19 @@ function HPAccountInfo(props) {
 
         e.preventDefault();
 
+        //check when last update was
+        if(lastUpdate !== null){
+            let lastUpdateDate = new Date(lastUpdate.seconds * 1000);
+            const now = new Date();
+            const diff = now.getTime() - lastUpdateDate.getTime();
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+            if(days < 1){
+                setError('You can only update once a week');
+                return;
+            }
+        }
+
         //validate data
         if(email === '' || displayName === '' || memberCount === 0 || weeks === 0){
             setError('Please fill out all fields');
@@ -75,13 +90,14 @@ function HPAccountInfo(props) {
 
         try{
             //update user info
-            const userDocRef = doc(db , 'helpWantedUsers' , user.currentUser.uid);
+            const userDocRef = doc(db , 'serviceProviderUser' , user.currentUser.uid);
             
             await updateDoc(userDocRef , {
                 email,
                 displayName,
                 peopleCount : +memberCount,
-                timePeriod : +weeks
+                timePeriod : +weeks,
+                lastUpdate : new Date()
             });
 
             //update account display name
@@ -156,25 +172,25 @@ function HPAccountInfo(props) {
                     <TextField
                         type={'number'}
                         id="outlined-error-helper-text"
-                        placeholder='Enter your family members here'
+                        placeholder='Enter how much people you can help with here'
                         // helperText="Incorrect entry."
                         size="small"
                         required
                         value={memberCount}
                         onChange={(e) => setMemberCount(e.target.value)}
-                        helperText="Please enter the number of family members"
+                        helperText="Enter how much people you can help with here"
                     /><br/>
 
                     <TextField
                         type={'number'}
                         id="outlined-error-helper-text"
-                        placeholder='Enter your weeks you want to stay'
+                        placeholder='Enter number of weeks you can help with here'
                         // helperText="Incorrect entry."
                         size="small"
                         required
                         value={weeks}
                         onChange={(e) => setWeeks(e.target.value)}
-                        helperText="Please enter the number of weeks you want to stay"
+                        helperText="Please enter number of weeks you can help with here"
                     /><br/>
 
                     <Button 
