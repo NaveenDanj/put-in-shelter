@@ -19,7 +19,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 //icons
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
+import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 
 
 //firebase import
@@ -38,6 +38,7 @@ import MapContainerSP from '../../Components/HelpProviderDashboard/MapContainerS
 //router dom
 import { useNavigate } from "react-router-dom";
 import HPAccountInfo from '../../Components/HelpProviderDashboard/Dialog/HPAccountInfo';
+import SetHPLocation from '../../Components/HelpProviderDashboard/Dialog/SetHPLocation';
 
 const drawerWidth = 240;
 
@@ -116,7 +117,7 @@ function HelpProviderDashboard() {
 
     //dialog states
     const [spAccDialogOpen , setSpAccDialogOpen] = React.useState(false);
-
+    const [spAddLocationDialogOpen , setSpAddLocationDialogOpen] = React.useState(false);
 
 
     React.useEffect(() => {
@@ -221,7 +222,7 @@ function HelpProviderDashboard() {
             <Divider />
 
             <List>
-                
+
                 <ListItemButton
                     key={'Update Account Info'}
                     sx={{
@@ -241,6 +242,27 @@ function HelpProviderDashboard() {
                     <AccountCircleIcon /> 
                 </ListItemIcon>
                 <ListItemText primary={'Update Account Info'} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+
+                <ListItemButton
+                    key={'Set Location'}
+                    sx={{
+                        minHeight: 48,
+                        justifyContent: open ? 'initial' : 'center',
+                        px: 2.5,
+                    }}
+                    onClick={() => setSpAddLocationDialogOpen(true)} 
+                >
+                <ListItemIcon
+                    sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                    }}
+                >
+                    <AddLocationAltIcon /> 
+                </ListItemIcon>
+                <ListItemText primary={'Set Location'} sx={{ opacity: open ? 1 : 0 }} />
                 </ListItemButton>
 
                 <ListItemButton
@@ -276,10 +298,18 @@ function HelpProviderDashboard() {
                 <DrawerHeader />
                 
                 <MapContainerSP />
+
                 <HPAccountInfo 
                     open={spAccDialogOpen}
                     setOpen={setSpAccDialogOpen}
                     onClose={() => setSpAccDialogOpen(false)}
+                />
+
+                <SetHPLocation 
+                    open={spAddLocationDialogOpen}
+                    setOpen={setSpAddLocationDialogOpen}
+                    onClose={() => setSpAddLocationDialogOpen(false)}
+                
                 />
 
             </Box>
