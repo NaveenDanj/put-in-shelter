@@ -39,6 +39,7 @@ import MapContainerSP from '../../Components/HelpProviderDashboard/MapContainerS
 import { useNavigate } from "react-router-dom";
 import HPAccountInfo from '../../Components/HelpProviderDashboard/Dialog/HPAccountInfo';
 import SetHPLocation from '../../Components/HelpProviderDashboard/Dialog/SetHPLocation';
+import SetAvailablity from '../../Components/HelpProviderDashboard/Dialog/SetAvailablity';
 
 const drawerWidth = 240;
 
@@ -118,7 +119,7 @@ function HelpProviderDashboard() {
     //dialog states
     const [spAccDialogOpen , setSpAccDialogOpen] = React.useState(false);
     const [spAddLocationDialogOpen , setSpAddLocationDialogOpen] = React.useState(false);
-
+    const [setAvailablityOpen , setSetAvailablityOpen] = React.useState(false);
 
     React.useEffect(() => {
 
@@ -272,7 +273,7 @@ function HelpProviderDashboard() {
                         justifyContent: open ? 'initial' : 'center',
                         px: 2.5,
                     }}
-                    onClick={() => setSpAddLocationDialogOpen(true)} 
+                    onClick={() => setSetAvailablityOpen(true)} 
                 >
                 <ListItemIcon
                     sx={{
@@ -321,16 +322,21 @@ function HelpProviderDashboard() {
                 <MapContainerSP />
 
                 <HPAccountInfo 
-                    open={spAccDialogOpen}
-                    setOpen={setSpAccDialogOpen}
-                    onClose={() => setSpAccDialogOpen(false)}
+                  open={spAccDialogOpen}
+                  setOpen={setSpAccDialogOpen}
+                  onClose={() => setSpAccDialogOpen(false)}
                 />
 
                 <SetHPLocation 
-                    open={spAddLocationDialogOpen}
-                    setOpen={setSpAddLocationDialogOpen}
-                    onClose={() => setSpAddLocationDialogOpen(false)}
-                
+                  open={spAddLocationDialogOpen}
+                  setOpen={setSpAddLocationDialogOpen}
+                  onClose={() => setSpAddLocationDialogOpen(false)}
+                />
+
+                <SetAvailablity 
+                  open={setAvailablityOpen}
+                  setOpen={setSetAvailablityOpen}
+                  onClose={() => setSetAvailablityOpen(false)}
                 />
 
             </Box>
