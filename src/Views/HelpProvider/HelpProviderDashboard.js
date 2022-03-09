@@ -16,9 +16,9 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import LogoutIcon from '@mui/icons-material/Logout';
+
 //icons
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import AddLocationIcon from '@mui/icons-material/AddLocation';
+
 
 
 //firebase import
@@ -27,14 +27,12 @@ import { getAuth , signOut  } from 'firebase/auth';
 
 //redux imports
 import {useSelector , useDispatch } from 'react-redux';
-import { setCurrentUser } from '../store/Slices/CurrentUserSlice';
+import { setCurrentUser } from '../../store/Slices/CurrentUserSlice';
 
 
 //components
-import '../css/back.css';
-import MapContainer from '../Components/HelpWantedDashboard/MapContainer';
-import AccountInfo from '../Components/HelpWantedDashboard/Dialogs/AccountInfo';
-import SetMyLocation from '../Components/HelpWantedDashboard/Dialogs/SetMyLocation'
+import '../../css/back.css';
+import MapContainer from '../../Components/HelpWantedDashboard/MapContainer';
 
 //router dom
 import { useNavigate } from "react-router-dom";
@@ -120,10 +118,8 @@ function HelpProviderDashboard() {
 
         try{
             
-            const userDocRef = doc(getFirestore() , 'helpWantedUsers' , user.currentUser.uid);
+            const userDocRef = doc(getFirestore() , 'serviceProviderUser' , user.currentUser.uid);
             const userDoc = await getDoc(userDocRef);
-
-            console.log('selected file : ' , userDoc.exists());
         
             if(!userDoc.exists()){
                 setLoading(false);
@@ -147,10 +143,7 @@ function HelpProviderDashboard() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
   
-    //Account info dialog
-    const [accountInfoDialogOpen, setAccountInfoDialogOpen] = React.useState(false);
-    const [addLocationDialogOpen , setAddLocationDialogOpen] = React.useState(false);
-  
+
     let navigate = useNavigate();
   
   
@@ -204,7 +197,7 @@ function HelpProviderDashboard() {
                 <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" noWrap component="div">
-                HELP WANTED DASHBOARD
+                HELP PROVIDER DASHBOARD
                 </Typography>
             </Toolbar>
             </AppBar>
@@ -221,49 +214,6 @@ function HelpProviderDashboard() {
             <Divider />
 
             <List>
-
-
-                <ListItemButton
-                key={'My Profile'}
-                sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
-                }}
-                onClick={() => setAccountInfoDialogOpen(true)}
-                >
-                <ListItemIcon
-                    sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                    }}
-                >
-                    <AccountCircleIcon /> 
-                </ListItemIcon>
-                <ListItemText primary={'My Profile'} sx={{ opacity: open ? 1 : 0 }} />
-                </ListItemButton>
-
-                <ListItemButton
-                key={'Set My Location'}
-                sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
-                }}
-                onClick={() => setAddLocationDialogOpen(true)}
-                >
-                <ListItemIcon
-                    sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                    }}
-                >
-                    <AddLocationIcon /> 
-                </ListItemIcon>
-                <ListItemText primary={'Set My Location'} sx={{ opacity: open ? 1 : 0 }} />
-                </ListItemButton>
 
                 <ListItemButton
                 key={'Logout'}
@@ -286,7 +236,6 @@ function HelpProviderDashboard() {
                 <ListItemText primary={'Logout'} sx={{ opacity: open ? 1 : 0 }} />
                 </ListItemButton>
 
-
             </List>
 
             <Divider />
@@ -298,18 +247,6 @@ function HelpProviderDashboard() {
             <DrawerHeader />
             
             <MapContainer />
-
-            <AccountInfo 
-                open={accountInfoDialogOpen}
-                setOpen={setAccountInfoDialogOpen}
-                onClose={() => setAccountInfoDialogOpen(false)}
-            />
-
-            <SetMyLocation 
-                open={addLocationDialogOpen}
-                setOpen={setAddLocationDialogOpen}
-                onClose={() => setAddLocationDialogOpen(false)}
-            />
 
             </Box>
 

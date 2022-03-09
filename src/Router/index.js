@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HelpProviderDashboard from "../Views/HelpProvider/HelpProviderDashboard";
 import HelpProviderLogin from "../Views/HelpProvider/HelpProviderLogin";
 import HelpProviderOtherInfo from "../Views/HelpProvider/HelpProviderOtherInfo";
 import HelpProviderRegister from "../Views/HelpProvider/HelpProviderRegister";
@@ -33,6 +34,18 @@ export default function RouterView() {
                 </ProtectedRoute>
               }
             />
+
+            <Route 
+              exact
+              path="helpprovider"
+              element={
+                <ProtectedRoute>
+                  <HelpProviderDashboard />
+                </ProtectedRoute>
+              }
+            />
+
+
             {/* <Route path="helpwanted" element={<HelpWantedDashboard />} /> */}
             {/* <Route path="*" element={<NoPage />} />  */}
       </Routes>
