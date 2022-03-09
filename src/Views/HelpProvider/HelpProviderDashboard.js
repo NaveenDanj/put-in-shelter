@@ -18,6 +18,7 @@ import ListItemText from '@mui/material/ListItemText';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 //icons
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 
 
@@ -36,6 +37,7 @@ import MapContainerSP from '../../Components/HelpProviderDashboard/MapContainerS
 
 //router dom
 import { useNavigate } from "react-router-dom";
+import HPAccountInfo from '../../Components/HelpProviderDashboard/Dialog/HPAccountInfo';
 
 const drawerWidth = 240;
 
@@ -111,6 +113,11 @@ function HelpProviderDashboard() {
     const dispatch = useDispatch();
 
     const [loading , setLoading] = React.useState(true);
+
+    //dialog states
+    const [spAccDialogOpen , setSpAccDialogOpen] = React.useState(false);
+
+
 
     React.useEffect(() => {
 
@@ -214,15 +221,36 @@ function HelpProviderDashboard() {
             <Divider />
 
             <List>
+                
+                <ListItemButton
+                    key={'Update Account Info'}
+                    sx={{
+                        minHeight: 48,
+                        justifyContent: open ? 'initial' : 'center',
+                        px: 2.5,
+                    }}
+                    onClick={() => setSpAccDialogOpen(true)} 
+                >
+                <ListItemIcon
+                    sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                    }}
+                >
+                    <AccountCircleIcon /> 
+                </ListItemIcon>
+                <ListItemText primary={'Update Account Info'} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
 
                 <ListItemButton
-                key={'Logout'}
-                sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
-                }}
-                onClick={() => handleLogout()}
+                    key={'Logout'}
+                    sx={{
+                        minHeight: 48,
+                        justifyContent: open ? 'initial' : 'center',
+                        px: 2.5,
+                    }}
+                    onClick={() => handleLogout()}
                 >
                 <ListItemIcon
                     sx={{
@@ -236,6 +264,7 @@ function HelpProviderDashboard() {
                 <ListItemText primary={'Logout'} sx={{ opacity: open ? 1 : 0 }} />
                 </ListItemButton>
 
+
             </List>
 
             <Divider />
@@ -247,6 +276,11 @@ function HelpProviderDashboard() {
                 <DrawerHeader />
                 
                 <MapContainerSP />
+                <HPAccountInfo 
+                    open={spAccDialogOpen}
+                    setOpen={setSpAccDialogOpen}
+                    onClose={() => setSpAccDialogOpen(false)}
+                />
 
             </Box>
 
