@@ -32,7 +32,7 @@ import { setCurrentUser } from '../../store/Slices/CurrentUserSlice';
 
 //components
 import '../../css/back.css';
-import MapContainer from '../../Components/HelpWantedDashboard/MapContainer';
+import MapContainerSP from '../../Components/HelpProviderDashboard/MapContainerSP';
 
 //router dom
 import { useNavigate } from "react-router-dom";
@@ -123,7 +123,7 @@ function HelpProviderDashboard() {
         
             if(!userDoc.exists()){
                 setLoading(false);
-                // navigate("/");
+                navigate("/");
             }
 
             setLoading(false);
@@ -131,7 +131,7 @@ function HelpProviderDashboard() {
         }catch(err){
             console.log(err);
             setLoading(false);
-            // navigate("/");
+            navigate("/");
         }
     
         }
@@ -244,9 +244,9 @@ function HelpProviderDashboard() {
 
 
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-            <DrawerHeader />
-            
-            <MapContainer />
+                <DrawerHeader />
+                
+                <MapContainerSP />
 
             </Box>
 
