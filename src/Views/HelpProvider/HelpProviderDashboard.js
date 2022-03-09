@@ -20,7 +20,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 //icons
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
-
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 
 //firebase import
 import { doc, getDoc , getFirestore } from "firebase/firestore";
@@ -263,6 +263,27 @@ function HelpProviderDashboard() {
                     <AddLocationAltIcon /> 
                 </ListItemIcon>
                 <ListItemText primary={'Set Location'} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+
+                <ListItemButton
+                    key={'Set Availability'}
+                    sx={{
+                        minHeight: 48,
+                        justifyContent: open ? 'initial' : 'center',
+                        px: 2.5,
+                    }}
+                    onClick={() => setSpAddLocationDialogOpen(true)} 
+                >
+                <ListItemIcon
+                    sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                    }}
+                >
+                    <EventAvailableIcon /> 
+                </ListItemIcon>
+                <ListItemText primary={'Set Availability'} sx={{ opacity: open ? 1 : 0 }} />
                 </ListItemButton>
 
                 <ListItemButton
