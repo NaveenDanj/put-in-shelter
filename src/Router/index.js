@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HelpProviderLogin from "../Views/HelpProvider/HelpProviderLogin";
 import HelpProviderOtherInfo from "../Views/HelpProvider/HelpProviderOtherInfo";
 import HelpProviderRegister from "../Views/HelpProvider/HelpProviderRegister";
 import HelpWantedDashboard from "../Views/HelpWantedDashboard";
@@ -21,6 +22,7 @@ export default function RouterView() {
 
             <Route path="serviceProvidersignup" element={<HelpProviderRegister />} />
             <Route path="serviceProvidersignupother" element={<HelpProviderOtherInfo />} />
+            <Route path="serviceProviderlogin" element={<HelpProviderLogin />} />
 
             <Route 
               exact
