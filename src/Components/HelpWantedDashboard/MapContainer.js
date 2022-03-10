@@ -1,6 +1,12 @@
 import React, { useEffect , useState } from 'react'
-import { GoogleMap, useLoadScript } from '@react-google-maps/api';
+import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
 
+
+//firebase imports
+import {collection, getDocs ,  getFirestore } from "firebase/firestore"; 
+import { Scale } from '@mui/icons-material';
+
+//icons
 
 const libraries = ["places"];
 
@@ -13,6 +19,24 @@ const mapContainerStyles = {
 function MapContainer() {
 
     const [userCurrentLocation , setUserCurrentLocation] = useState({lat:0 , lng:0});
+    const [allShelters , setAllShelters] = useState([]);
+
+    const fetchAllShelters = async () => {
+
+        try{
+            const shelterSnap = await getDocs(collection(getFirestore() , "serviceProviderUser"));
+            shelterSnap.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.id, " => ", doc.data());
+                setAllShelters(prevState => [...prevState , doc.data()]);
+            });
+
+        }catch(err){
+            console.log(err);
+        }
+
+
+    }
 
     useEffect(() => {
 
@@ -29,6 +53,8 @@ function MapContainer() {
         } else {
             console.log("Not Available");
         }
+
+        fetchAllShelters();
         
     } , []);
 
@@ -52,13 +78,33 @@ function MapContainer() {
         <div>
             <GoogleMap
                 mapContainerStyle={mapContainerStyles}
-                zoom={15}
+                zoom={10}
                 center={{
                     lat: userCurrentLocation.lat,
                     lng: userCurrentLocation.lng
                 }}
                 onClick={(event) => handleAddLocation(event)}
+            
             >
+
+                {allShelters.map((shelter) => {
+                    return (
+                        <div>
+                            <Marker
+                                key={shelter.uid}
+                                position={ {  lat : shelter.currentLocation.lat , lng : shelter.currentLocation.lng }}
+                                icon={ { 
+                                    url : "https://img.icons8.com/external-kiranshastry-solid-kiranshastry/64/000000/external-shelter-charity-kiranshastry-solid-kiranshastry.png",
+                                    scaledSize : new window.google.maps.Size(30,30),
+                                    origin : new window.google.maps.Point(0,0),
+                                }}
+                            />
+                        </div>
+
+                    );
+
+                })}
+
             </GoogleMap>
         </div>
     )
