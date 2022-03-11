@@ -14,7 +14,7 @@ function HeaderContent() {
     return (
         <>
             <h1 style={styles.headerText}>#CODEFORUKRAINE</h1>
-            <h2 style={styles.subtitle }>Help to find a shelter</h2>
+            <h2 style={styles.subtitle }>Help to find a sheltersss</h2>
 
             <div style={styles.content}>
                 <p style={{ marginTop : -5 }}>
