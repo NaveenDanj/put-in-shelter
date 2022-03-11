@@ -24,6 +24,7 @@ function ShelterInfo(props) {
 
     const { setRouter , shelter } = props;
 
+
     return (
         <div style={{ width : 400}}>
             <h1 style={{ fontWeight : 'bold' }}>Shelter Info</h1>
@@ -86,7 +87,14 @@ function ShelterInfo(props) {
 
             <div style={{ display : 'flex' , flexDirection : 'row' , justifyContent : 'space-around' , width : '100%' }}>
 
-                <IconButton color="secondary" aria-label="add an alarm" >
+                <IconButton 
+                    color="secondary" 
+                    aria-label="add an alarm" 
+                    onClick={() => {
+                        setRouter(shelter.currentLocation);
+                        
+                    }} 
+                >
                     <LocalCarWashIcon />
                 </IconButton>
 

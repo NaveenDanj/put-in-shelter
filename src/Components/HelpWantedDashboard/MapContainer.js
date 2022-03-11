@@ -1,5 +1,5 @@
 import React, { useEffect , useState } from 'react'
-import { GoogleMap, InfoWindow, Marker, useLoadScript } from '@react-google-maps/api';
+import { GoogleMap, InfoWindow, Marker, useLoadScript , DirectionsRenderer } from '@react-google-maps/api';
 
 
 //firebase imports
@@ -10,7 +10,7 @@ import ShelterInfo from './ShelterInfo';
 
 //icons
 
-const libraries = ["places"];
+const libraries = ["places" , "directions" , "geometry" , "drawing"];
 
 const mapContainerStyles = {
     width: '100%',
@@ -23,7 +23,7 @@ function MapContainer() {
     const [userCurrentLocation , setUserCurrentLocation] = useState({lat:0 , lng:0});
     const [allShelters , setAllShelters] = useState([]);
     const [selectedShelter , setSelectedShelter] = useState(null);
-
+    const [directions , setDirections] = useState(null);
 
     const [showShelterInfoOpen , setShowShelterInfoOpen] = useState(false);
 
@@ -45,8 +45,45 @@ function MapContainer() {
 
     }
 
+    //set direction to user selected shelter
     const handleSetRoute = async (routerValue) => {
         console.log('route set! : ' , routerValue);
+
+        const places = [
+            {latitude: userCurrentLocation.lat ,longitude: userCurrentLocation.lng},
+            {latitude: routerValue.lat ,longitude: routerValue.lng},
+        ];
+
+        const waypoints = places.map(p => ({
+            location: { lat: p.latitude, lng: p.longitude },
+            stopover: true
+        }));
+
+        const origin = waypoints.shift().location;
+        const destination = waypoints.pop().location;
+        let travelMode = 'DRIVING';
+
+        const directionsService = new window.google.maps.DirectionsService();
+        directionsService.route(
+        {
+            origin: origin,
+            destination: destination,
+            travelMode: travelMode,
+            waypoints: waypoints
+        },
+        (result, status) => {
+            console.log(result)
+            if (status === window.google.maps.DirectionsStatus.OK) {
+                setDirections(result);
+            } else {
+                console.log(result);
+            }
+        }
+        );
+
+        console.log("placese : " , waypoints);
+
+
     }
 
     useEffect(() => {
@@ -87,6 +124,8 @@ function MapContainer() {
 
     return (
         <div>
+
+
             <GoogleMap
                 mapContainerStyle={mapContainerStyles}
                 zoom={10}
@@ -95,7 +134,7 @@ function MapContainer() {
                     lng: userCurrentLocation.lng
                 }}
                 onClick={(event) => handleAddLocation(event)}
-            
+                directions={directions}
             >
 
                 {allShelters.map((shelter) => {
@@ -148,7 +187,12 @@ function MapContainer() {
                 open={showShelterInfoOpen}
                 setOpen={setShowShelterInfoOpen}
                 shelter={selectedShelter}
+                
             />
+
+            {/* <DirectionsRenderer 
+                directions={directions}
+            /> */}
 
         </div>
     )
